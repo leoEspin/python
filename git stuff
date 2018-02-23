@@ -6,4 +6,15 @@ What is git push origin master
 
 This is a command that says "push the commits in the local branch named master to the remote named origin". Once this is executed, all the stuff that you last synchronised with origin will be sent to the remote repository and other people will be able to see them there.
 
+It's possible to tell git something like "the branch called master over here is local mirror of the branch called foo on the remote called bar". In git speak, this means that master tracks bar/foo. When you clone for the first time, you will get a branch called master and a remote called origin (where you cloned from) with the local master set to track the master on origin. Once this is set up, you can simply say git push and it'll do it. The longer command is available in case you need it (e.g. git push might push to the official public repo and git push review master can be used to push to a separate remote which your team uses to review code). You can set your branch to be a tracking branch using the --set-upstream option of the git branch command.
+
+As for the verbosity of git push origin master, you've noticed that after the first push, you can then just do git push. This is because of a series of difficult-to-remember-but-generally-helpful defaults :)
+
+If no remote is specified, the remote configured for the current branch (in remote.master.url in your case) is used. If that's not set up, then origin is used.
+If there's no "refspec" (e.g. master, master:my-experiment, etc.) specified, then git defaults to pushing every local branch that has the same name as a branch on the remote. If you just have a branch called master in common between your repository and the remote one, that'll be the same as pushing your master to the remote master.
+Personally, since I tend to have many topic branches (and often several remotes) I always use the form:
+
+git push origin master
+... to avoid accidentally pushing other branches.
+
 

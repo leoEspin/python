@@ -44,9 +44,8 @@ for i in range(1,5000):
     else:
         ax.plot(nextP[0],nextP[1],'r.')   
     
+plt.savefig("Sierpinski.pdf")
 plt.show()
-
-
 
     
 
