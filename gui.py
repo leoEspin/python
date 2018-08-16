@@ -20,6 +20,10 @@ class InputFile(QWidget):
         self.initUI()
           
     def initUI(self):      
+        """
+        Initialization method. It creates the window and
+        its elements
+        """
         self.lbl1 = QLabel(self)  
         self.lbl1.setText('Points per unit length (X)')
         lbl2 = QLabel('Points per unit length (Y)', self)        
@@ -57,6 +61,11 @@ class InputFile(QWidget):
         self.setWindowTitle('Input dialog')
         
     def clickMethod(self):
+        """
+        When the 'Ok' button is pressed, the contents
+        of the line text editors are stored in the 
+        text file 'input'
+        """
         file = open('input','w')
         file.write(self.le1.text() + '\n')
         file.write(self.le2.text() + '\n')
