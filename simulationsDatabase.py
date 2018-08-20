@@ -17,8 +17,8 @@ def cleanRows(fname,firstRow):
     (if firstRow=True) of a csv data file containing the column names,
     or a row with numerical values separated with commas
     """
-    rowT=''
-    row=''
+    rowT='Location,'
+    row=fname.replace('/input','')+','
     file = open(fname,'rt')  #read text file   
     tmp=file.readlines()
     if firstRow:
