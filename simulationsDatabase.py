@@ -5,7 +5,8 @@ Created on Mon Aug 20 13:03:37 2018
 Creates a csv database listing the parameters used for simulations stored
 in a folder hierarchy. Each row of the csv file corresponds to the contents
 of an individual input file containing the values of the parameters of a 
-particular simulation.
+particular simulation. Files 'input' and 'simulations.csv' are examples of
+the input and output of this function.
 @author: Leo
 """
 import os
