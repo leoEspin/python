@@ -21,7 +21,7 @@ class simulationData:
         self.paramFile=(input("Name of input parameter file (defalut \"input\"): ")\
                         or 'input')
         tmp=input("Desired name for the data file: ")
-        if tmp.find('.')==-1: #if no file extension given
+        if '.' not in tmp: #if no file extension given
             tmp=tmp+'.csv'
         self.storeFile=tmp 
         self.directory= input("name of directory for search: ")
