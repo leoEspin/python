@@ -9,54 +9,80 @@ particular simulation. Files 'input' and 'simulations.csv' are examples of
 the input and output of this function.
 @author: Leo
 """
-import os
+class simulationData:
+    paramFile=''
+    storeFile=''
+    directory=''
+    commentSeparator=''
+    headerReplaceTup=[(',',''),('\t',''),('\n','')] #must remove commas
+    bodyReplaceTup=[('\t',''),('d0','0'),('d-','e-')]#double precision floats
+    
+    def __init__(self):  
+        self.paramFile=(input("Name of input parameter file (defalut \"input\"): ")\
+                        or 'input')
+        self.storeFile=input("Desired name for the data file: ") 
+        self.directory= input("name of directory for search: ")
+        print('\n**Required information about structure of parameter file**:')
+        self.commentSeparator=(input("Comment separator (Fortran90 defalut \"!\"): ")\
+                               or '!')
+        tmp=input('Extra header elements to be replaced '+\
+                  'entered as tuples: '+\
+                  '\n(currently '+str(self.headerReplaceTup) +')')
+        if tmp != '':
+            self.headerReplaceTup.append(tmp)
+        tmp=input('Extra Body elements to be replaced '+\
+                  'entered as tuples: '+\
+                  '\n(currently '+str(self.bodyReplaceTup) +')')
+        if tmp != '':
+            self.bodyReplaceTup.append(tmp)
+        self.fileSearch()
 
-def cleanRows(fname,firstRow):
-    """
-    Opens the file fname (text) and returns a string, either the first row
-    (if firstRow=True) of a csv data file containing the column names,
-    or a row with numerical values separated with commas
-    """
-    rowT='Location,'
-    row=fname.replace('/input','')+','
-    file = open(fname,'rt')  #read text file   
-    tmp=file.readlines()
-    if firstRow:
-        for line in tmp:
-            value=line.split(sep='!')
-            strB=value[1]
-            #cleaning strings
-            strB=strB.replace('\t','')
-            strB=strB.replace('\n','')
-            if ',' in strB:
-                strB=strB.replace(',','')
-            rowT=rowT+strB+','
-        return rowT+'\n'
-    else:
-        for line in tmp:
-            value=line.split(sep='!')
-            strA=value[0]
-            #cleaning strings
-            strA=strA.replace('\t','')
-            strA=strA.replace('d0','0')  #double precision floats
-            strA=strA.replace('d-','e-') #double precision floats
-            if '.' in strA:
-                row=row+str(float(strA))+','
-            else:
-                row=row+str(int(strA))+','
-        return row+'\n'
+    def fileSearch(self):
+        os = __import__('os')
+        dataFile = open(self.storeFile,'wt')
+        firstR=True
+        for root, dirs, files in os.walk(self.directory): #does an iterative search
+            for file in files:
+                if file == self.paramFile:
+                    if firstR:
+                        csv=self.cleanRows(os.path.join(root, file),firstR)
+                        firstR=False
+                    csv=csv+self.cleanRows(os.path.join(root, file),firstR)
+        
+        dataFile.write(csv)
+        dataFile.close()
+        print('\nData stored correctly')
+        
+    def cleanRows(self,fname,firstRow):
+        """
+        Opens the file fname (text) and returns a string, either the first row
+        (if firstRow=True) of a csv data file containing the column names,
+        or a row with numerical values separated with commas
+        """
+        rowTop='Location,' #string for top row
+        row=fname.replace('/'+self.paramFile,'')+',' #generic string afterwards
+        file = open(fname,'rt')  #read text file   
+        tmp=file.readlines()
+        if firstRow:
+            for line in tmp:
+                value=line.split(sep='!')
+                strB=value[1]
+                #cleaning strings
+                for tup in self.headerReplaceTup:
+                    strB=strB.replace(tup[0],tup[1])
+                rowTop=rowTop+strB+','
+            return rowTop+'\n'
+        else:
+            for line in tmp:
+                value=line.split(sep='!')
+                strA=value[0]
+                #cleaning strings
+                for tup in self.bodyReplaceTup:
+                    strA=strA.replace(tup[0],tup[1])
+                if '.' in strA:
+                    row=row+str(float(strA))+','
+                else:
+                    row=row+str(int(strA))+','
+            return row+'\n'
 
-csv = input("Desired name for the data file: ") 
-dataFile = open(csv,'wt')
-rootD= input("name of directory for search: ")
-firstR=True
-for root, dirs, files in os.walk(rootD): #does an iterative search
-    for file in files:
-        if file == 'input':
-            if firstR:
-                csv=cleanRows(os.path.join(root, file),True)
-                firstR=False
-            csv=csv+cleanRows(os.path.join(root, file),False)
-
-dataFile.write(csv)
-dataFile.close()
+mydata=simulationData()
