@@ -20,7 +20,10 @@ class simulationData:
     def __init__(self):  
         self.paramFile=(input("Name of input parameter file (defalut \"input\"): ")\
                         or 'input')
-        self.storeFile=input("Desired name for the data file: ") 
+        tmp=input("Desired name for the data file: ")
+        if tmp.find('.')==-1: #if no file extension given
+            tmp=tmp+'.csv'
+        self.storeFile=tmp 
         self.directory= input("name of directory for search: ")
         print('\n**Required information about structure of parameter file**:')
         self.commentSeparator=(input("Comment separator (Fortran90 defalut \"!\"): ")\
@@ -35,7 +38,7 @@ class simulationData:
                   '\n(currently '+str(self.bodyReplaceTup) +')')
         if tmp != '':
             self.bodyReplaceTup.append(tmp)
-        self.fileSearch()
+        #self.fileSearch() #better let the user run this
 
     def fileSearch(self):
         os = __import__('os')
@@ -86,3 +89,4 @@ class simulationData:
             return row+'\n'
 
 mydata=simulationData()
+mydata.fileSearch()
