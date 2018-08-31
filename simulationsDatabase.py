@@ -6,14 +6,14 @@ Creates a csv database listing the parameters used for simulations stored
 in a folder hierarchy. Each row of the csv file corresponds to the contents
 of an individual input file containing the values of the parameters of a 
 particular simulation. Files 'input' and 'simulations.csv' are examples of
-the input and output of this function.
+the input and output of this code.
 @author: Leo
 """
 class simulationData:
     paramFile=''
     storeFile=''
     directory=''
-    commentSeparator=''
+    commentSeparator='!' #comment separator in Fortran90
     headerReplaceTup=[(',',''),('\t',''),('\n','')] #must remove commas
     bodyReplaceTup=[('\t',''),('d0','0'),('d-','e-')]#double precision floats
     
