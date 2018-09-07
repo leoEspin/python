@@ -2,10 +2,9 @@
 "new branch.txt"
 gitStuff
 Bioreactor.py
+ml4d/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-ml4d/.ipynb_checkpoints
 
-demo-gui
 nl43.py
