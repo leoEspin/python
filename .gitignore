@@ -1,10 +1,11 @@
+#linux recovery files
 *~
-"new branch.txt"
-gitStuff
-Bioreactor.py
-ml4d/
 
 # Jupyter Notebook
 .ipynb_checkpoints
 
+Sierpinsky.pdf
+gitStuff
+Bioreactor.py
+ml4d/
 nl43.py
