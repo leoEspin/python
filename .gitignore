@@ -4,6 +4,10 @@
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# unit testing files
+__*
+*.pyc
+
 Sierpinsky.pdf
 gitStuff
 Bioreactor.py
