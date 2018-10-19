@@ -34,27 +34,29 @@ class NameExtractor:
     def __init__(self,*string):
         if len(string)>0:
             self.mFullName = str(string[0]) #have to convert the tuple first
-        else:
-            self.mFullName = input('input a name: ')
-        self.parseName()    
+            self.parseName()    
             
-    def extractWords(self,string):
-        words=string.split()
-        for i in range(len(words)): 
-            for char in self.separators:
-                words[i]=words[i].replace(char,'')
-        self.mWords=words
+    def extractWords(self):
+        if self.mFullName != '':
+            words=self.mFullName.split()
+            for i in range(len(words)): 
+                for char in self.separators:
+                    words[i]=words[i].replace(char,'')
+            self.mWords=words
+        else:
+            self.parseName()
     
     def parseName(self):
         if self.mFullName != '':
-            self.extractWords(self.mFullName)
+            self.extractWords()
             self.FindTitle()
             self.FindSuffix()
             self.FindLastName()
             self.FindFirstName()
             self.FindMiddleName()
         else:
-            print('A name has to be provided')
+            self.mFullName = input('A name has to be provided first: ')
+            self.parseName()
     
     def FindTitle(self):
         if self.mWords != '':
