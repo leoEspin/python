@@ -1,6 +1,4 @@
-exclude: ["ReadMe.md", "License.md"]#, "changelog.md"
-
-highlighter: rouge
+exclude: ["ReadMe.md", "License.md"]
 
 title : Machine learning notes
 author :
