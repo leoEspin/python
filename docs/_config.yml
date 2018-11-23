@@ -1,1 +1,8 @@
 theme: jekyll-theme-minimal
+
+title : Machine learning notes
+author :
+  name : Leonardo Espin
+  github : leoespin
+
+#exclude: ["ReadMe.md", "changelog.md", "License.md"]
