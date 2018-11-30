@@ -16,5 +16,5 @@ with open('docs/index.md', "w") as index:
     #index.write('<center> <h1>Machine learning notes</h1>A collection of python codes</center>\n')
     #index.write('\n')
     index.write('Project maintained by [Leo Espin](https://github.com/leoEspin), Hosted on GitHub Pages\n\n')
-    index.write('This folder contains useful notes about my machine learning projects:\n')
+    index.write('Here are some useful notes about my machine learning projects:\n')
     index.write(list)
