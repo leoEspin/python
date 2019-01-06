@@ -21,6 +21,9 @@
 <!-- End Jekyll SEO tag -->
 
     <link rel="stylesheet" href="/python/assets/css/style.css?v=3266b28b05c3401f26319b36a42be5817c5a9c7f">
+{% if site.google_analytics and jekyll.environment == 'production' %}
+{% include analytics.html %}
+{% endif %}
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
