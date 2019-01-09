@@ -11806,7 +11806,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ex5data1-X.csv&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#main data, cross validation data and validation datasets:</span>
+<span class="n">X</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ex5data1-X.csv&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">y</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ex5data1-y.csv&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">Xtest</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ex5data1-Xt.csv&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">ytest</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ex5data1-yt.csv&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -11818,6 +11819,15 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A single-variable linear regression of the main data:</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -11893,6 +11903,15 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Clearly we won't be able to fit the data as it is. Regularization will not help either:</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
@@ -11927,6 +11946,15 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The learning curves help to characterize the problem:</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -11991,7 +12019,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Clearly it is a <strong>large bias</strong> problem. Both curves are converging to a large error value.</p>
+<p>Clearly it is a <strong>large bias</strong> model. Both curves are converging to a large error value.</p>
 <p>Below I merge <code>X</code> and <code>Xtest</code> because <code>sklearn</code>'s <code>learning_curve</code> takes care of doing cross validation.</p>
 
 </div>
@@ -12035,6 +12063,15 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To solve the large bias problem, let's add features to the data:</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -12158,13 +12195,23 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Repeating linear regression <em>without regularization</em>:</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regReg</span><span class="o">=</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">,:],</span>
-                                         <span class="n">yfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">])</span><span class="c1">#default lambda (called alpha in sklearn) =1</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#default lambda (called alpha in sklearn) is 1. We remove regularization by making it zero</span>
+<span class="n">regReg</span><span class="o">=</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">,:],</span>
+                                         <span class="n">yfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">])</span>
 <span class="n">rPred_y</span> <span class="o">=</span> <span class="n">regReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">,:])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">regReg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">regReg</span><span class="o">.</span><span class="n">intercept_</span> <span class="p">)</span>
@@ -12238,7 +12285,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>learning curves while using the polynomial features:</p>
+<p>So now the model fits the data well. But how it will generalize to new data?</p>
+<p>Here is were learning curves become really useful:</p>
 
 </div>
 </div>
@@ -12315,8 +12363,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So, this example shows high variance. the model does not generalize well when we add data.</p>
-<h3 id="Choosing-the-regularization-parameter-$\lambda$">Choosing the regularization parameter $\lambda$<a class="anchor-link" href="#Choosing-the-regularization-parameter-$\lambda$">&#182;</a></h3>
+<p>So, this example shows high variance as we add new data. The model does not generalize well.</p>
+<h3 id="Choosing-a-regularization-parameter-$\lambda$">Choosing a regularization parameter $\lambda$<a class="anchor-link" href="#Choosing-a-regularization-parameter-$\lambda$">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12331,6 +12379,7 @@ div#notebook {
 <span class="n">mTr</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="n">mTe</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ytest</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lamb</span><span class="p">:</span>
+    <span class="c1">#notice the conversion from lambda to alpha below</span>
     <span class="n">regReg</span><span class="o">=</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">l</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">mTr</span><span class="p">),</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">,:],</span><span class="n">y</span><span class="p">)</span>
     <span class="n">train</span> <span class="o">=</span> <span class="n">regReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">,:])</span>
     <span class="n">test</span><span class="o">=</span><span class="n">regReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xfull</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">12</span><span class="p">:,:])</span>
@@ -12390,7 +12439,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Learning curves with the optimal value of $\lambda$</p>
+<p>Recalculating the learning curves with the optimal value of $\lambda$</p>
 
 </div>
 </div>
@@ -12549,6 +12598,50 @@ Validation error: 4.190395255084082
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#let&#39;s see the regularized regression coefficients:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regReg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regReg</span><span class="o">.</span><span class="n">intercept_</span> <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[2.67835450e-01 6.10254114e-03 7.74911263e-05 1.35308049e-06
+  2.09694585e-08 3.16920841e-10 6.15718317e-12 6.55912613e-14]]
+[6.67832161]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that $\theta_0 =6.68$ and $\theta_1=0.27$ are comparable in magnitude to the same coefficients in the first regression we did, which didn't use regularization.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
