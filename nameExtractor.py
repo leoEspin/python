@@ -18,13 +18,7 @@ https://support.smartbear.com/articles/testcomplete/unit-testing/
 """
 
 class NameExtractor:
-    mFullName = ''
-    mTitle = ''
-    mFirstName = ''
-    mMiddleName = ''
-    mLastName = ''
-    mSuffix = ''
-    mWords = ''
+    #class attributes:
     separators=[',', '.', ':']
     TitleList=['Mr','Ms','Miss','Dr','Mrs','Fr','Capt','Lt','Gen',
                'President','Sister','Father','Brother','Major']
@@ -32,6 +26,14 @@ class NameExtractor:
                 'MD','DC','Sr','Jr','II','III','IV']
     
     def __init__(self,*string):
+        #instance attributes
+        self.mFullName = ''
+        self.mTitle = ''
+        self.mFirstName = ''
+        self.mMiddleName = ''
+        self.mLastName = ''
+        self.mSuffix = ''
+        self.mWords = ''
         if len(string)>0:
             self.mFullName = str(string[0]) #have to convert the tuple first
             self.parseName()    
