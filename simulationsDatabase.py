@@ -10,14 +10,14 @@ the input and output of this code.
 @author: Leo
 """
 class simulationData:
-    paramFile=''
-    storeFile=''
-    directory=''
     commentSeparator='!' #comment separator in Fortran90
     headerReplaceTup=[(',',''),('\t',''),('\n','')] #must remove commas
     bodyReplaceTup=[('\t',''),('d0','0'),('d-','e-')]#double precision floats
     
     def __init__(self):  
+        self.paramFile=''
+        self.storeFile=''
+        self.directory=''
         self.paramFile=(input("Name of input parameter file (defalut \"input\"): ")\
                         or 'input')
         tmp=input("Desired name for the data file: ")
