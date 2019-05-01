@@ -1,7 +1,7 @@
-Project maintained by [Leo Espin](https://github.com/leoEspin), Hosted on GitHub Pages
+Website maintained by [Leo Espin](https://github.com/leoEspin), Hosted on GitHub Pages
 
 Here are some useful notes about my machine learning projects:
-* [Linear model and statistical significance with python](https://leoespin.github.io/python/Linear model and statistical significance with python.html)
+* [F-test and statistical significance with python](https://leoespin.github.io/python/F-test and statistical significance with python.html)
 * [data mining a Polar XML file](https://leoespin.github.io/python/data mining a Polar XML file.html)
 * [detailed folium map example](https://leoespin.github.io/python/detailed folium map example.html)
 * [Neural networks and hand-written image recognition](https://leoespin.github.io/python/Neural networks and hand-written image recognition.html)
