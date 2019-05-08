@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Statistical significance</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>F-test and statistical significance</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11900,6 +11900,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#variance with numpy</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([(</span><span class="n">x</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="c1">#vectorized operation</span>
 <span class="nb">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 
@@ -11952,10 +11953,12 @@ div#notebook {
 <span class="c1">#the survival function for F, (1-cdf)</span>
 <span class="n">p_fit</span><span class="o">=</span><span class="mi">2</span>
 <span class="n">p_mean</span><span class="o">=</span><span class="mi">1</span>
-<span class="n">pValue</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">Fstatistic</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-     <span class="n">p_fit</span><span class="o">-</span><span class="n">p_mean</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="n">p_fit</span><span class="p">)</span><span class="c1">#regression and residual deg of freedom</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-value for linear model: </span><span class="si">{}</span><span class="s1">, significant=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pValue</span><span class="p">,</span>
-                                                               <span class="n">pValue</span><span class="o">&lt;</span><span class="mf">0.05</span><span class="p">))</span>
+
+<span class="n">critical</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="o">.</span><span class="mi">999</span><span class="p">,</span><span class="n">p_fit</span><span class="o">-</span><span class="n">p_mean</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="n">p_fit</span><span class="p">)</span><span class="c1">#regression and residual deg of freedom</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The F-test critical p-value for a 99.9</span><span class="si">% s</span><span class="s1">ignificance level</span><span class="se">\n</span><span class="s1">with </span><span class="si">{:}</span><span class="s1"> and </span><span class="si">{:}</span><span class="s1"> degrees of freedom is </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">p_fit</span><span class="o">-</span><span class="n">p_mean</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="n">p_fit</span><span class="p">,</span><span class="n">critical</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">since </span><span class="si">{:.2f}</span><span class="s1"> &gt; </span><span class="si">{:.2f}</span><span class="s1">, the critical p-value, we reject the hyp. that</span><span class="se">\n</span><span class="s1">the regression model could occur by chance</span><span class="se">\n</span><span class="s1">(therefore the model IS significant)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="n">Fstatistic</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">critical</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -11972,7 +11975,13 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>p-value for linear model: 9.944806746657967e-117, significant=True
+<pre>
+The F-test critical p-value for a 99.9% significance level
+with 1 and 200 degrees of freedom is 11.15
+
+since 2610.10 &gt; 11.15, the critical p-value, we reject the hyp. that
+the regression model could occur by chance
+(therefore the model IS significant)
 </pre>
 </div>
 </div>
@@ -11985,7 +11994,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Adding a lot more noise to the data, and recalculating <strong>R^2</strong> and the <strong>p-value</strong></p>
+<ul>
+<li>if we add a lot more noise to the data, and we recalculate <strong>R^2</strong> and the <strong>p-value</strong></li>
+</ul>
 
 </div>
 </div>
@@ -12050,10 +12061,12 @@ div#notebook {
 <span class="c1">#the survival function for F, (1-cdf)</span>
 <span class="n">p_fit</span><span class="o">=</span><span class="mi">2</span>
 <span class="n">p_mean</span><span class="o">=</span><span class="mi">1</span>
-<span class="n">pValue</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">Fstatistic</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-     <span class="n">p_fit</span><span class="o">-</span><span class="n">p_mean</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="n">p_fit</span><span class="p">)</span><span class="c1">#regression and residual deg of freedom</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-value for linear model: </span><span class="si">{}</span><span class="s1">, significant=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pValue</span><span class="p">,</span>
-                                                               <span class="n">pValue</span><span class="o">&lt;</span><span class="mf">0.05</span><span class="p">))</span>
+
+<span class="n">critical</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="o">.</span><span class="mi">95</span><span class="p">,</span><span class="n">p_fit</span><span class="o">-</span><span class="n">p_mean</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="n">p_fit</span><span class="p">)</span><span class="c1">#regression and residual deg of freedom</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The F-test critical p-value for a 95</span><span class="si">% s</span><span class="s1">ignificance level</span><span class="se">\n</span><span class="s1">with </span><span class="si">{:}</span><span class="s1"> and </span><span class="si">{:}</span><span class="s1"> degrees of freedom is </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">p_fit</span><span class="o">-</span><span class="n">p_mean</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="n">p_fit</span><span class="p">,</span><span class="n">critical</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">since </span><span class="si">{:.2f}</span><span class="s1"> &lt; </span><span class="si">{:.2f}</span><span class="s1">, the critical p-value, we CAN</span><span class="se">\&#39;</span><span class="s1">T reject the hyp. that</span><span class="se">\n</span><span class="s1">this regression model could occur by chance</span><span class="se">\n</span><span class="s1">(the model is NOT significant)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="n">Fstatistic</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">critical</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12070,7 +12083,13 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>p-value for linear model: 0.08953861436263978, significant=False
+<pre>
+The F-test critical p-value for a 95% significance level
+with 1 and 200 degrees of freedom is 3.89
+
+since 2.91 &lt; 3.89, the critical p-value, we CAN&#39;T reject the hyp. that
+this regression model could occur by chance
+(the model is NOT significant)
 </pre>
 </div>
 </div>
