@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Aug 20 17:26:04 2019
-Uses backtraking to fill the n x n board with n queens in a way that the queens
+Uses backtraking to fill an n x n chess board with n queens in a way that the queens
 cannot attack each other. 
 The progress of the solution is shown with an animation on the terminal, showing
 the current status of the solution at each step. It finishes with an empty board
