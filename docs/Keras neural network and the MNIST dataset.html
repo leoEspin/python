@@ -13079,6 +13079,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <center> <h1>A Keras neural network and the MNIST dataset</h1> </center><p><strong>Author:</strong> Leonardo Espin</p>
 <p>Date: 10/2/2019</p>
+<p>Below I train a standard feed-forward neural network and a convolutional neural network on the MNIST handwritten digits dataset.</p>
 
 </div>
 </div>
@@ -13110,10 +13111,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">x_train_i</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test_i</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x_train_i</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x_test_i</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
@@ -13149,7 +13150,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#check one of the images </span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_train_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
@@ -13218,12 +13219,12 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#normalize the data to 0-1:</span>
-<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">/</span> <span class="mi">255</span>
-<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">x_train_i</span> <span class="o">=</span> <span class="n">x_train_i</span><span class="o">/</span> <span class="mi">255</span>
+<span class="n">x_test_i</span> <span class="o">=</span> <span class="n">x_test_i</span><span class="o">/</span><span class="mi">255</span>
 
 <span class="c1">#reshaping for feeding the NN</span>
-<span class="n">x_train</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">img_rows</span><span class="o">*</span><span class="n">img_cols</span><span class="p">,)</span>
-<span class="n">x_test</span><span class="o">=</span><span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">img_rows</span><span class="o">*</span><span class="n">img_cols</span><span class="p">,)</span>
+<span class="n">x_train</span><span class="o">=</span><span class="n">x_train_i</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_train_i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">img_rows</span><span class="o">*</span><span class="n">img_cols</span><span class="p">,)</span>
+<span class="n">x_test</span><span class="o">=</span><span class="n">x_test_i</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_test_i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">img_rows</span><span class="o">*</span><span class="n">img_cols</span><span class="p">,)</span>
 
 <span class="c1"># convert class integers to binary class matrices</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
@@ -13384,50 +13385,62 @@ _________________________________________________________________
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Train on 48000 samples, validate on 12000 samples
 Epoch 1/20
-WARNING:tensorflow:Entity &lt;function Function._initialize_uninitialized_variables.&lt;locals&gt;.initialize_variables at 0x7faae3239840&gt; could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module &#39;gast&#39; has no attribute &#39;Num&#39;
-WARNING: Entity &lt;function Function._initialize_uninitialized_variables.&lt;locals&gt;.initialize_variables at 0x7faae3239840&gt; could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module &#39;gast&#39; has no attribute &#39;Num&#39;
-48000/48000 [==============================] - 3s 73us/sample - loss: 0.5666 - accuracy: 0.8413 - val_loss: 0.2685 - val_accuracy: 0.9214
+WARNING:tensorflow:Entity &lt;function Function._initialize_uninitialized_variables.&lt;locals&gt;.initialize_variables at 0x7fcabb7768c8&gt; could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module &#39;gast&#39; has no attribute &#39;Num&#39;
+WARNING: Entity &lt;function Function._initialize_uninitialized_variables.&lt;locals&gt;.initialize_variables at 0x7fcabb7768c8&gt; could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module &#39;gast&#39; has no attribute &#39;Num&#39;
+48000/48000 [==============================] - 4s 77us/sample - loss: 0.5390 - accuracy: 0.8479 - val_loss: 0.2813 - val_accuracy: 0.9208
 Epoch 2/20
-48000/48000 [==============================] - 3s 58us/sample - loss: 0.2525 - accuracy: 0.9278 - val_loss: 0.2202 - val_accuracy: 0.9383
+48000/48000 [==============================] - 3s 61us/sample - loss: 0.2554 - accuracy: 0.9277 - val_loss: 0.2148 - val_accuracy: 0.9402
 Epoch 3/20
-48000/48000 [==============================] - 3s 60us/sample - loss: 0.2075 - accuracy: 0.9407 - val_loss: 0.1942 - val_accuracy: 0.9465
+48000/48000 [==============================] - 3s 58us/sample - loss: 0.2114 - accuracy: 0.9404 - val_loss: 0.1981 - val_accuracy: 0.9445
 Epoch 4/20
-48000/48000 [==============================] - 3s 60us/sample - loss: 0.1811 - accuracy: 0.9473 - val_loss: 0.1839 - val_accuracy: 0.9490
+48000/48000 [==============================] - 3s 61us/sample - loss: 0.1839 - accuracy: 0.9473 - val_loss: 0.1816 - val_accuracy: 0.9480
 Epoch 5/20
-48000/48000 [==============================] - 3s 60us/sample - loss: 0.1621 - accuracy: 0.9533 - val_loss: 0.1794 - val_accuracy: 0.9487
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.1654 - accuracy: 0.9520 - val_loss: 0.1669 - val_accuracy: 0.9525
 Epoch 6/20
-48000/48000 [==============================] - 3s 59us/sample - loss: 0.1474 - accuracy: 0.9561 - val_loss: 0.1649 - val_accuracy: 0.9528
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.1498 - accuracy: 0.9567 - val_loss: 0.1558 - val_accuracy: 0.9548
 Epoch 7/20
-48000/48000 [==============================] - 3s 60us/sample - loss: 0.1355 - accuracy: 0.9594 - val_loss: 0.1601 - val_accuracy: 0.9539
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.1369 - accuracy: 0.9603 - val_loss: 0.1516 - val_accuracy: 0.9569
 Epoch 8/20
-48000/48000 [==============================] - 3s 60us/sample - loss: 0.1256 - accuracy: 0.9621 - val_loss: 0.1528 - val_accuracy: 0.9558
+48000/48000 [==============================] - 3s 59us/sample - loss: 0.1274 - accuracy: 0.9630 - val_loss: 0.1511 - val_accuracy: 0.9567
 Epoch 9/20
-48000/48000 [==============================] - 3s 61us/sample - loss: 0.1161 - accuracy: 0.9653 - val_loss: 0.1544 - val_accuracy: 0.9545
+48000/48000 [==============================] - 3s 59us/sample - loss: 0.1184 - accuracy: 0.9657 - val_loss: 0.1445 - val_accuracy: 0.9584
 Epoch 10/20
-48000/48000 [==============================] - 3s 61us/sample - loss: 0.1098 - accuracy: 0.9671 - val_loss: 0.1458 - val_accuracy: 0.9582
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.1102 - accuracy: 0.9675 - val_loss: 0.1455 - val_accuracy: 0.9572
 Epoch 11/20
-48000/48000 [==============================] - 3s 61us/sample - loss: 0.1028 - accuracy: 0.9685 - val_loss: 0.1486 - val_accuracy: 0.9563
+48000/48000 [==============================] - 3s 59us/sample - loss: 0.1033 - accuracy: 0.9698 - val_loss: 0.1510 - val_accuracy: 0.9547
 Epoch 12/20
-48000/48000 [==============================] - 3s 60us/sample - loss: 0.0965 - accuracy: 0.9711 - val_loss: 0.1471 - val_accuracy: 0.9581
+48000/48000 [==============================] - 3s 61us/sample - loss: 0.0994 - accuracy: 0.9704 - val_loss: 0.1363 - val_accuracy: 0.9608
 Epoch 13/20
-48000/48000 [==============================] - 3s 61us/sample - loss: 0.0911 - accuracy: 0.9725 - val_loss: 0.1439 - val_accuracy: 0.9598
+48000/48000 [==============================] - 3s 59us/sample - loss: 0.0916 - accuracy: 0.9728 - val_loss: 0.1370 - val_accuracy: 0.9609
 Epoch 14/20
-48000/48000 [==============================] - 3s 63us/sample - loss: 0.0875 - accuracy: 0.9728 - val_loss: 0.1469 - val_accuracy: 0.9588
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.0871 - accuracy: 0.9736 - val_loss: 0.1379 - val_accuracy: 0.9605
 Epoch 15/20
-48000/48000 [==============================] - 3s 59us/sample - loss: 0.0815 - accuracy: 0.9754 - val_loss: 0.1460 - val_accuracy: 0.9583
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.0830 - accuracy: 0.9753 - val_loss: 0.1334 - val_accuracy: 0.9620
 Epoch 16/20
-48000/48000 [==============================] - 3s 59us/sample - loss: 0.0786 - accuracy: 0.9757 - val_loss: 0.1465 - val_accuracy: 0.9582
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.0794 - accuracy: 0.9762 - val_loss: 0.1306 - val_accuracy: 0.9628
 Epoch 17/20
-48000/48000 [==============================] - 3s 59us/sample - loss: 0.0749 - accuracy: 0.9772 - val_loss: 0.1394 - val_accuracy: 0.9603
+48000/48000 [==============================] - 3s 59us/sample - loss: 0.0760 - accuracy: 0.9769 - val_loss: 0.1403 - val_accuracy: 0.9619
 Epoch 18/20
-48000/48000 [==============================] - 3s 58us/sample - loss: 0.0710 - accuracy: 0.9788 - val_loss: 0.1381 - val_accuracy: 0.9611
+48000/48000 [==============================] - 3s 60us/sample - loss: 0.0721 - accuracy: 0.9780 - val_loss: 0.1332 - val_accuracy: 0.9622
 Epoch 19/20
-48000/48000 [==============================] - 3s 61us/sample - loss: 0.0685 - accuracy: 0.9798 - val_loss: 0.1387 - val_accuracy: 0.9613
+48000/48000 [==============================] - 3s 59us/sample - loss: 0.0682 - accuracy: 0.9793 - val_loss: 0.1523 - val_accuracy: 0.9572
 Epoch 20/20
-48000/48000 [==============================] - 3s 62us/sample - loss: 0.0650 - accuracy: 0.9806 - val_loss: 0.1480 - val_accuracy: 0.9594
-&lt;tensorflow.python.keras.callbacks.History object at 0x7faae3223c88&gt;
+48000/48000 [==============================] - 3s 61us/sample - loss: 0.0659 - accuracy: 0.9796 - val_loss: 0.1383 - val_accuracy: 0.9616
 </pre>
 </div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[9]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;tensorflow.python.keras.callbacks.History at 0x7fcabb774b00&gt;</pre>
+</div>
+
 </div>
 
 </div>
@@ -13465,8 +13478,8 @@ Epoch 20/20
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Test loss: 0.14300356764751487
-Test accuracy: 0.9595
+<pre>Test loss: 0.13213677672185004
+Test accuracy: 0.9637
 </pre>
 </div>
 </div>
@@ -13477,7 +13490,7 @@ Test accuracy: 0.9595
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#the conversion below is to remove the error</span>
@@ -13574,6 +13587,198 @@ Test accuracy: 0.9595
 <pre>array([[7]])</pre>
 </div>
 
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Building-a-convolutional-neural-network">Building a convolutional neural network<a class="anchor-link" href="#Building-a-convolutional-neural-network">&#182;</a></h3><p>The NN below as two extra convolutional layers. The effect of these is dramatic, by reducing the ammount of training required from 20 epochs in the FFNN above to 4 epochs below. Despite of this reduction in the amount of training the accuracy increases (starting from the first epoch from 84% to 93%) by two percentage points</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">import</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Conv2D</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cnv_model</span><span class="o">=</span><span class="n">Sequential</span><span class="p">()</span>
+
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span>                <span class="c1">#number of convolutional filters</span>
+                     <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span><span class="c1">#shape of convolution kernel</span>
+                 <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span>
+                 <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+
+<span class="c1">#another convolutional layer</span>
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+                        <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+
+<span class="c1">#removing an extra convolution layer resulted in slightly improved accuracy O(1e-3)</span>
+
+<span class="c1">#the flattening layer converts the output of the previous layers</span>
+<span class="c1">#into a 1D representation for each image</span>
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+
+<span class="c1">#for some reason this layer has an order of magnitude more parameters than</span>
+<span class="c1">#the dense leyer in the previous model. Is it due to the extra dimension</span>
+<span class="c1">#for the image convolutions?</span>
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="c1">#number of nodes in this dense layer</span>
+                <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+<span class="c1">#the prediction layer. note that we convert outputs into probabilities</span>
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="c1">#number of prediction classes</span>
+                <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Model: &#34;sequential_1&#34;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 26, 26, 12)        120       
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 24, 24, 20)        2180      
+_________________________________________________________________
+flatten (Flatten)            (None, 11520)             0         
+_________________________________________________________________
+dense_3 (Dense)              (None, 25)                288025    
+_________________________________________________________________
+dense_4 (Dense)              (None, 10)                260       
+=================================================================
+Total params: 290,585
+Trainable params: 290,585
+Non-trainable params: 0
+_________________________________________________________________
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cnv_model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
+              <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span>
+              <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+
+<span class="c1">#redimensioning the input is necessary because of the convolutions</span>
+<span class="c1">#the 4th-dimension is for the single color channel (gray-scale images)</span>
+<span class="n">cnv_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train_i</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_train_i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">img_rows</span><span class="p">,</span><span class="n">img_cols</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y_train</span><span class="p">,</span>
+          <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="c1">#number of images for each gradient descent step</span>
+          <span class="n">epochs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>      <span class="c1">#notice the smaller number of epochs!</span>
+          <span class="n">validation_split</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Train on 48000 samples, validate on 12000 samples
+Epoch 1/4
+WARNING:tensorflow:Entity &lt;function Function._initialize_uninitialized_variables.&lt;locals&gt;.initialize_variables at 0x7fca6caac840&gt; could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module &#39;gast&#39; has no attribute &#39;Num&#39;
+WARNING: Entity &lt;function Function._initialize_uninitialized_variables.&lt;locals&gt;.initialize_variables at 0x7fca6caac840&gt; could not be transformed and will be executed as-is. Please report this to the AutoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: module &#39;gast&#39; has no attribute &#39;Num&#39;
+48000/48000 [==============================] - 41s 856us/sample - loss: 0.2318 - accuracy: 0.9303 - val_loss: 0.0929 - val_accuracy: 0.9744
+Epoch 2/4
+48000/48000 [==============================] - 44s 911us/sample - loss: 0.0692 - accuracy: 0.9794 - val_loss: 0.0642 - val_accuracy: 0.9825
+Epoch 3/4
+48000/48000 [==============================] - 44s 924us/sample - loss: 0.0470 - accuracy: 0.9852 - val_loss: 0.0626 - val_accuracy: 0.9817
+Epoch 4/4
+48000/48000 [==============================] - 45s 944us/sample - loss: 0.0346 - accuracy: 0.9892 - val_loss: 0.0614 - val_accuracy: 0.9822
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[17]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;tensorflow.python.keras.callbacks.History at 0x7fca6ca96da0&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">score2</span> <span class="o">=</span> <span class="n">cnv_model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test_i</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_test_i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">img_rows</span><span class="p">,</span><span class="n">img_cols</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                       <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test loss:&#39;</span><span class="p">,</span> <span class="n">score2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test accuracy:&#39;</span><span class="p">,</span> <span class="n">score2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Test loss: 0.0518858770695515
+Test accuracy: 0.9843
+</pre>
+</div>
 </div>
 
 </div>
